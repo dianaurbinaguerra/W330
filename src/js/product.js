@@ -11,6 +11,7 @@ function addProductToCart(product) {
   cart.push(product);
 
   // save updated cart
+  localStorage.setItem("so-cart", JSON.stringify(cart));
   setLocalStorage("so-cart", cart);
 }
 
