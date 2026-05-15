@@ -41,7 +41,7 @@ if (cartItems.length > 0) {
 
   // calculate total
   const total = cartItems.reduce((sum, item) => {
-    return sum + item.FinalPrice;
+    return sum + (item.FinalPrice || item.ListPrice);
   }, 0);
 
   // display total
