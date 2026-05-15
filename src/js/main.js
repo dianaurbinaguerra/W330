@@ -1,8 +1,9 @@
-import ProductData from "./ProductData.mjs";
+// main.js
 
-const dataSource = new ProductData("tents");
+import ProductList from "./ProductList.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 
-// not sure if these two are ncessary
-const listElement = document.querySelector(".product-list");
+const dataSource = new ExternalServices();
+const productList = new ProductList(dataSource);
 
-const productList = new ProductList("tents", dataSource, listElement);
+productList.init();
