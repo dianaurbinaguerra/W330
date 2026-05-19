@@ -35,7 +35,7 @@ const cartItems = getLocalStorage("so-cart") || [];
 const cartFooter = document.querySelector(".cart-footer");
 const cartTotalElement = document.querySelector(".cart-total");
 
-if (cartItems.length > 0) {
+if (cartItems.length > 0 && cartFooter && cartTotalElement) {
   // show footer
   cartFooter.classList.remove("hide");
 
@@ -47,7 +47,6 @@ if (cartItems.length > 0) {
   // display total
   cartTotalElement.innerHTML = `Total: $${total.toFixed(2)}`;
 }
-
 
 
 renderCartContents();
