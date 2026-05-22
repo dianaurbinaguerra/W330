@@ -55,3 +55,4 @@ if (cartItems.length > 0) {
 
 
 renderCartContents();
+
