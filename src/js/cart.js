@@ -8,30 +8,13 @@ import {
 const cartList = qs(".product-list");
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart") || [];
-
-  if (!cartList) return;
-
-  if (cartItems.length === 0) {
-    cartList.innerHTML = "<li class=\"cart-empty\">Your cart is empty.</li>";
-    return;
-  }
-
-  const htmlItems = cartItems.map((item, index) => cartItemTemplate(item, index));
-  cartList.innerHTML = htmlItems.join("");
+  const cartItems = getLocalStorage("so-cart");
+  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
 
-function cartItemTemplate(item, index) {
+function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
-  <button
-    class="cart-card__remove"
-    type="button"
-    data-index="${index}"
-    data-id="${item.Id}"
-    aria-label="Remove ${item.Name} from cart"
-  >
-    &times;
-  </button>
   <a href="#" class="cart-card__image">
     <img
       src="${item.Image}"
@@ -49,27 +32,26 @@ function cartItemTemplate(item, index) {
   return newItem;
 }
 
-function removeItemFromCart(index) {
-  const cartItems = getLocalStorage("so-cart") || [];
+// added for Cart Total DU
 
-  cartItems.splice(index, 1);
-  setLocalStorage("so-cart", cartItems);
-  renderCartContents();
+const cartItems = getLocalStorage("so-cart") || [];
+
+const cartFooter = document.querySelector(".cart-footer");
+const cartTotalElement = document.querySelector(".cart-total");
+
+function calculateTotal(items) {
+  return items.reduce((total, item) => {
+    return total + item.FinalPrice;
+  }, 0);
 }
 
-function handleRemoveFromCart(event) {
-  const removeButton = event.target.closest(".cart-card__remove");
+if (cartItems.length > 0) {
+  const total = calculateTotal(cartItems);
 
-  if (!removeButton) return;
+  cartFooter.classList.remove("hide");
 
-  const itemIndex = Number(removeButton.dataset.index);
-
-  if (Number.isNaN(itemIndex)) return;
-
-  removeItemFromCart(itemIndex);
+  cartTotalElement.textContent = `Total: $${total.toFixed(2)}`;
 }
 
-initCartBadge();
-cartList?.addEventListener("click", handleRemoveFromCart);
+
 renderCartContents();
-
