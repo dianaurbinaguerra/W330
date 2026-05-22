@@ -1,15 +1,28 @@
 import { getLocalStorage } from "./utils.mjs";
-import { getLocalStorage } from "./utils.mjs";
-
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  const cartItems = getLocalStorage("so-cart") || [];
+  const productList = document.querySelector(".product-list");
+  const cartFooter = document.querySelector(".cart-footer");
+  const cartTotalElement = document.querySelector(".cart-total");
+
+  if (cartItems.length === 0) {
+    productList.innerHTML = `<li class="cart-empty">Your cart is empty.</li>`;
+    cartFooter.classList.add("hide");
+    return;
+  }
+
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  productList.innerHTML = htmlItems.join("");
+
+  const total = calculateTotal(cartItems);
+
+  cartFooter.classList.remove("hide");
+  cartTotalElement.textContent = `Total: $${total.toFixed(2)}`;
 }
 
 function cartItemTemplate(item) {
-  const newItem = `<li class="cart-card divider">
+  return `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
       src="${item.Image}"
@@ -23,31 +36,12 @@ function cartItemTemplate(item) {
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
-
-  return newItem;
 }
-
-// added for Cart Total DU
-
-const cartItems = getLocalStorage("so-cart") || [];
-
-const cartFooter = document.querySelector(".cart-footer");
-const cartTotalElement = document.querySelector(".cart-total");
 
 function calculateTotal(items) {
   return items.reduce((total, item) => {
-    return total + item.FinalPrice;
+    return total + Number(item.FinalPrice);
   }, 0);
 }
 
-if (cartItems.length > 0) {
-  const total = calculateTotal(cartItems);
-
-  cartFooter.classList.remove("hide");
-
-  cartTotalElement.textContent = `Total: $${total.toFixed(2)}`;
-}
-
-
 renderCartContents();
-
