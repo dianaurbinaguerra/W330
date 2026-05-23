@@ -41,3 +41,26 @@ export function renderListWithTemplate(
   // Insert all HTML into the page
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+// get a parameter from the URL
+export function getParam(param) {
+  const searchParams = new URLSearchParams(window.location.search);
+  return searchParams.get(param);
+}
+
+// update cart badge count
+export function initCartBadge() {
+  const cart = getLocalStorage("so-cart") || [];
+
+  const badge = document.querySelector(".cart-count");
+
+  if (!badge) return;
+
+  badge.textContent = cart.length;
+
+  if (cart.length > 0) {
+    badge.classList.remove("hide");
+  } else {
+    badge.classList.add("hide");
+  }
+}
