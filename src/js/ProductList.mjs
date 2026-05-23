@@ -54,7 +54,7 @@ export default class ProductList {
       this.listElement,
       list,
       "afterbegin",
-      true,
+      true
     );
   }
 }
