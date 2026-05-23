@@ -1,11 +1,6 @@
-import {
-  getLocalStorage,
-  initCartBadge,
-  qs,
-  setLocalStorage,
-} from "./utils.mjs";
+import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
 
-const cartList = qs(".product-list");
+loadHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
@@ -32,27 +27,4 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
-// added for Cart Total DU
-
-const cartItems = getLocalStorage("so-cart") || [];
-
-const cartFooter = document.querySelector(".cart-footer");
-const cartTotalElement = document.querySelector(".cart-total");
-
-function calculateTotal(items) {
-  return items.reduce((total, item) => {
-    return total + item.FinalPrice;
-  }, 0);
-}
-
-if (cartItems.length > 0) {
-  const total = calculateTotal(cartItems);
-
-  cartFooter.classList.remove("hide");
-
-  cartTotalElement.textContent = `Total: $${total.toFixed(2)}`;
-}
-
-
 renderCartContents();
-
