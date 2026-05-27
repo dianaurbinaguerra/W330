@@ -13,7 +13,7 @@ function productCardTemplate(product) {
   const isDiscounted = price < retailPrice;
 
   const discountPercent = Math.round(
-    ((retailPrice - price) / retailPrice) * 100,     
+    ((retailPrice - price) / retailPrice) * 100     
   );
 
   return `

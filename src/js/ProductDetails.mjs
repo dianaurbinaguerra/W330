@@ -36,6 +36,11 @@ export default class ProductDetails {
   renderProductDetails() {
     const color = this.product.Colors[0]?.ColorName || "";
     const price = this.product.FinalPrice || this.product.ListPrice;
+    const retailPrice = this.product.SuggestedRetailPrice;
+    const isDiscounted = price < retailPrice;
+    const discountPercent = Math.round(
+      ((retailPrice - price) / retailPrice) * 100     
+    );
 
     this.productContainer.innerHTML = `
       <h3>${this.product.Brand.Name}</h3>
@@ -45,7 +50,14 @@ export default class ProductDetails {
         src="${this.product.Image}"
         alt="${this.product.NameWithoutBrand}"
       />
-      <p class="product-card__price">$${price.toFixed(2)}</p>
+      ${isDiscounted
+        ? `<p class="discount-badge">-${discountPercent}% OFF</p>`
+        : ""}
+
+      <p class="product-card__price">$${price.toFixed(2)}</p>  
+      ${isDiscounted 
+        ? `<p class="original-price">$${retailPrice.toFixed(2)}</p>` 
+        : ""}    
       <p class="product__color">${color}</p>
       <p class="product__description">${this.product.DescriptionHtmlSimple}</p>
       <div class="product-detail__add">
