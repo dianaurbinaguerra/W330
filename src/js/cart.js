@@ -13,11 +13,13 @@ function renderCartContents() {
   if (!cartList) return;
 
   if (cartItems.length === 0) {
-    cartList.innerHTML = "<li class=\"cart-empty\">Your cart is empty.</li>";
+    cartList.innerHTML = "<li class='cart-empty'>Your cart is empty.</li>";
     return;
   }
 
-  const htmlItems = cartItems.map((item, index) => cartItemTemplate(item, index));
+  const htmlItems = cartItems.map((item, index) =>
+    cartItemTemplate(item, index),
+  );
   cartList.innerHTML = htmlItems.join("");
 }
 
