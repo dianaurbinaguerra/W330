@@ -28,7 +28,7 @@ export function getParam(param) {
   return urlParams.get(param);
 }
 
-export function renderListWithTemplate(
+export function (
   templateFn,
   parentElement,
   list,
