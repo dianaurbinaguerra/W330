@@ -1,14 +1,20 @@
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 import Alert from "./Alert.js";
-import { initCartBadge } from "./utils.mjs";
+import { initCartBadge, loadHeaderFooter } from "./utils.mjs";
 
-const dataSource = new ProductData("tents");
-const listElement = document.querySelector(".product-list");
+async function init() {
+  await loadHeaderFooter();
 
-const productList = new ProductList("tents", dataSource, listElement);
-productList.init();
-initCartBadge();
+  const dataSource = new ProductData("tents");
+  const listElement = document.querySelector(".product-list");
 
-const alert = new Alert();
-alert.init();
+  const productList = new ProductList("tents", dataSource, listElement);
+  productList.init();
+  initCartBadge();
+
+  const alert = new Alert();
+  alert.init();
+}
+
+init();
