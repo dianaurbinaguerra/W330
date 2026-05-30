@@ -1,9 +1,11 @@
-import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import ShoppingCart from "./ShoppingCart.mjs";
+import { initCartBadge, loadHeaderFooter, qs } from "./utils.mjs";
 
-loadHeaderFooter();
+async function init() {
+  await loadHeaderFooter();
 
-function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart") || [];
+  const cartList = qs(".product-list");
+  const shoppingCart = new ShoppingCart(cartList);
 
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
 
